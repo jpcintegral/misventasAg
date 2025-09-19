@@ -1,0 +1,102 @@
+<h3>Venta Directa</h3>
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <div class="form-container">
+
+   
+    <!-- Contenedor de la tabla -->
+    <div class="table-responsive">
+      <table mat-table [dataSource]="articulos" class="mat-elevation-z8">
+        <ng-container matColumnDef="marca">
+          <th mat-header-cell *matHeaderCellDef>Marca</th>
+          <td mat-cell *matCellDef="let a">{{ a.marca }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="precioVenta">
+          <th mat-header-cell *matHeaderCellDef>Precio Venta</th>
+          <td mat-cell *matCellDef="let a">{{ a.precio_venta | currency }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="stock">
+          <th mat-header-cell *matHeaderCellDef>Stock</th>
+          <td mat-cell *matCellDef="let a">{{ a.stock }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidad">
+          <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+          <td mat-cell *matCellDef="let a; let i = index">
+            <input
+              type="number"
+              min="0"
+              [max]="a.stock"
+              [formControl]="getArticuloControl(i)"
+            />
+            <div class="error" *ngIf="getArticuloControl(i).hasError('max')">
+              No puede superar el stock disponible ({{ a.stock }})
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef>Total</th>
+          <td mat-cell *matCellDef="let a; let i = index">{{ getTotal(i) | currency }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+
+     <!-- Contenedor de campos (estatus, monto, evidencia) -->
+    <div class="form-fields">
+      <div class="status-select" *ngIf="calculateGrandTotal() > 0">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Estatus de la Venta</mat-label>
+          <mat-select [formControl]="form.controls['status']">
+            <mat-option value="PENDIENTE">Pendiente</mat-option>
+            <mat-option value="CANCELADO">Cancelado</mat-option>"
+            <mat-option value="PARCIAL">Parcial</mat-option>
+            <mat-option value="PAGADO">Pagado</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Monto a pagar dinámico según estatus -->
+        <mat-form-field appearance="outline" class="full-width" *ngIf="form.controls['status'].value === 'PAGADO' || form.controls['status'].value === 'PARCIAL'">
+          <mat-label>Monto a pagar</mat-label>
+          <input 
+            matInput 
+            type="number" 
+            [formControl]="montoControl"
+            [readonly]="form.controls['status'].value === 'PAGADO'"
+            [value]="form.controls['status'].value === 'PAGADO' ? calculateGrandTotal() : null"
+          >
+        </mat-form-field>
+        <div class="file-input-container" *ngIf="form.controls['status'].value === 'PAGADO' || form.controls['status'].value === 'PARCIAL' || calculateGrandTotal() > 0">
+        <label for="evidencia">Comprobante de Pago (opcional)</label>
+        <input id="evidencia" type="file" (change)="onFileSelected($event)">
+      </div>
+    </div>
+      </div>
+
+      
+
+  </div>
+
+  <div class="total">
+    Total Venta: <strong>{{ calculateGrandTotal() | currency }}</strong>
+  </div>
+
+  <!-- Línea separadora -->
+  <hr style="border: 1px solid #878787; margin: 16px 0;">
+
+  <!-- Botones -->
+  <div class="buttons">
+    <button mat-raised-button color="primary" type="submit" [disabled]="calculateGrandTotal() === 0">
+      Registrar Venta
+    </button>
+    <button mat-stroked-button type="button" routerLink="/ventas">
+      Cancelar
+    </button>
+  </div>
+
+</form>

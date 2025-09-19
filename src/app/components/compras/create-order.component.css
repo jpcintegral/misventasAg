@@ -1,0 +1,4 @@
+.full-width { width: 100%; margin-bottom: 12px; }
+    table { width: 100%; margin-top: 15px; margin-bottom: 10px; }
+    .total { margin-top: 10px; font-weight: bold; }
+    .buttons { display:flex; gap: 8px; margin-top: 10px; }

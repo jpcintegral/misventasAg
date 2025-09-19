@@ -1,0 +1,120 @@
+<h3>Detalle de Venta</h3>
+
+<div *ngIf="venta; else noVenta" class="detalle-container">
+
+  <!-- Información de la venta -->
+  <div class="venta-info">
+    <p  *ngIf="vendedor"><strong>Vendedor:</strong> {{ vendedor }}</p>
+    <p ><strong>Fecha:</strong> {{ venta.fecha | date:'short' }}</p>
+    <p><strong>Status:</strong> {{ venta.status }}</p>
+    <p><strong>Total:</strong> {{ venta.total | currency }}</p>
+     <div class="abonos-info" *ngIf="venta?.payments?.length">
+      <p><strong>Total de Abonos:</strong> {{ totalAbonos | currency }}</p>
+      <p><strong>Faltante:</strong> {{ (venta.total - totalAbonos) | currency }}</p>
+    </div>
+  </div>
+
+  <!-- Tabla de artículos -->
+  <div class="table-responsive">
+    <table mat-table [dataSource]="venta.items" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="articulo">
+        <th mat-header-cell *matHeaderCellDef>Artículo</th>
+        <td mat-cell *matCellDef="let item">{{ item.articulo }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+        <td mat-cell *matCellDef="let item">{{ item.cantidad }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let item">{{ item.precio | currency }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="subtotal">
+        <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+        <td mat-cell *matCellDef="let item">{{ item.subtotal | currency }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- Botón Volver -->
+  <div class="buttons">
+    <button mat-stroked-button color="primary" (click)="generarRecibo(venta)">
+  Descargar Recibo
+</button>
+
+    <button mat-raised-button color="primary" (click)="goBack()">Volver</button>
+  </div>
+
+  <hr style="border: 1px solid #878787; margin: 16px 0;">
+
+  <!-- Formulario de pago / abono -->
+  <h4>Registrar Pago / Abono</h4>
+  <form [formGroup]="abonoForm" (ngSubmit)="submitPayment()" class="form-fields">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Monto a pagar</mat-label>
+      <input matInput type="number" formControlName="monto" min="0" [max]="venta?.total">
+      <mat-error *ngIf="abonoForm.get('monto')?.hasError('maxPendiente')">
+        El monto no puede ser mayor al pendiente de la venta
+      </mat-error>
+    </mat-form-field>
+
+    <div class="file-input-container" [style.display]="venta?.status === 'PAGADO'">
+      <label for="evidencia">Evidencia (opcional)</label>
+      <input id="evidencia" type="file" (change)="onFileSelected($event)">
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="abonoForm.invalid || venta?.status === 'PAGADO' || venta?.status === 'CANCELADO'">
+      Registrar Pago
+    </button>
+  </form>
+
+  <hr style="border: 1px solid #878787; margin: 16px 0;">
+
+  <!-- Historial de pagos / abonos -->
+  <h4>Historial de Pagos / Abonos</h4>  
+  <div class="table-responsive" *ngIf="venta?.payments?.length">
+    <table mat-table [dataSource]="venta?.payments" class="mat-elevation-z8">
+
+      <!-- Fecha -->
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef> Fecha </th>
+        <td mat-cell *matCellDef="let pago"> {{ pago.createdAt ? (pago.createdAt | date:'short') : '-' }} </td>
+        <td mat-footer-cell *matFooterCellDef> <strong>Total Abonos:</strong> </td>
+      </ng-container>
+
+      <!-- Monto -->
+      <ng-container matColumnDef="monto">
+        <th mat-header-cell *matHeaderCellDef> Monto </th>
+        <td mat-cell *matCellDef="let pago"> $ {{ pago.monto }} </td>
+        <td mat-footer-cell *matFooterCellDef> <strong>{{ totalAbonos | currency }}</strong> </td>
+      </ng-container>
+
+      <!-- Evidencia -->
+      <ng-container matColumnDef="evidencia">
+        <th mat-header-cell *matHeaderCellDef> Evidencia </th>
+        <td mat-cell *matCellDef="let pago"> 
+          <ng-container *ngIf="pago?.evidencia">
+            <img [src]="getPaymentImageUrl(pago)" alt="Evidencia" width="50" height="50"/>
+          </ng-container>  
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['fecha','monto','evidencia']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['fecha','monto','evidencia'];"></tr>
+      <tr mat-footer-row *matFooterRowDef="['fecha','monto']"></tr>
+    </table>
+  </div>
+
+</div>
+
+<ng-template #noVenta>
+  <p>No se encontró la venta.</p>
+  <button mat-raised-button color="primary" (click)="goBack()">Volver</button>
+</ng-template>

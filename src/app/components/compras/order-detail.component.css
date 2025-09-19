@@ -1,0 +1,57 @@
+.pedido-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pedido-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pedido-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Formulario de abono y tabla lado a lado en pantallas grandes */
+.abono-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pedido-table {
+  flex: 2;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Pantallas grandes: formulario a la izquierda, tabla a la derecha */
+@media (min-width: 768px) {
+  .pedido-flex {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .buttons {
+    flex-direction: row;
+    gap: 12px;
+  }
+}

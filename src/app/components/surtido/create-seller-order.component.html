@@ -1,0 +1,62 @@
+<h3>Nuevo Pedido a Vendedor</h3>
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Vendedor</mat-label>
+    <mat-select formControlName="vendedorId">
+      <mat-option *ngFor="let v of vendedores" [value]="v.id">{{ v.nombre }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('vendedorId')?.hasError('required') && form.get('vendedorId')?.touched">
+    Debe seleccionar un vendedor
+  </mat-error>
+  </mat-form-field>
+
+  <div class="table-responsive">
+    <table mat-table [dataSource]="articulos" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="marca">
+        <th mat-header-cell *matHeaderCellDef>Marca</th>
+        <td mat-cell *matCellDef="let a">{{ a.marca }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="precio_al_vendedor">
+        <th mat-header-cell *matHeaderCellDef>Precio Vendedor</th>
+        <td mat-cell *matCellDef="let a; let i = index">
+          <input type="number" min="0"
+            [formControl]="getArticuloControlField(i,'precio_al_vendedor')"
+            placeholder="{{ a.precio_venta }}" />
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="stock">
+        <th mat-header-cell *matHeaderCellDef>Stock</th>
+        <td mat-cell *matCellDef="let a">{{ a.stock }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+        <td mat-cell *matCellDef="let a; let i = index">
+          <input type="number" min="0" [max]="a.stock"
+            [formControl]="getArticuloControlField(i,'cantidad')" />
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="subtotal">
+        <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+        <td mat-cell *matCellDef="let a; let i = index">{{ getSubtotal(i) | currency }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <div class="total">
+    Total Pedido: {{ calculateGrandTotal() | currency }}
+  </div>
+
+  <div class="buttons">
+    <button mat-raised-button color="primary" type="submit">Guardar Pedido</button>
+    <button mat-stroked-button type="button" routerLink="/ventas">Cancelar</button>
+  </div>
+</form>
