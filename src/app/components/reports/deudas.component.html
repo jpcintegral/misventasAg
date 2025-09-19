@@ -1,0 +1,31 @@
+ <h3>Deuda Proveedores</h3>
+
+    <form [formGroup]="form" (ngSubmit)="consultar()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Proveedor</mat-label>
+        <mat-select formControlName="documentId">
+          <mat-option *ngFor="let p of proveedores" [value]="p.documentId">{{ p.nombre }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Consultar</button>
+    </form>
+
+    <table mat-table [dataSource]="deudas" class="mat-elevation-z8" *ngIf="deudas.length > 0">
+      <ng-container matColumnDef="marca">
+        <th mat-header-cell *matHeaderCellDef>Marca</th>
+        <td mat-cell *matCellDef="let d">{{ d.marca }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="cantidadPendiente">
+        <th mat-header-cell *matHeaderCellDef>Cantidad Pendiente</th>
+        <td mat-cell *matCellDef="let d">{{ d.cantidadPendiente }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="deudaTotal">
+        <th mat-header-cell *matHeaderCellDef>Deuda Total</th>
+        <td mat-cell *matCellDef="let d">{{ d.deudaTotal | currency }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>

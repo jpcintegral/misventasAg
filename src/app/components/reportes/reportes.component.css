@@ -1,0 +1,7 @@
+.table-container {
+  overflow-x: auto;
+  margin: 16px 0;
+}
+table {
+  width: 100%;
+}

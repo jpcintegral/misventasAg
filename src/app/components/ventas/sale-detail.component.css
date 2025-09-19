@@ -1,0 +1,38 @@
+.detalle-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* En pantallas grandes, formulario y tabla lado a lado */
+@media (min-width: 768px) {
+  .detalle-container {
+    flex-direction: column; /* o row si quieres formulario a la izquierda y tabla a la derecha */
+  }
+
+  .buttons {
+    flex-direction: row;
+    gap: 12px;
+  }
+}

@@ -1,0 +1,67 @@
+table { width: 100%; margin-top: 15px; }
+.estado-pendiente {
+  color: #d32f2f; /* rojo */
+  font-weight: bold;
+  background: #d32f2f21;
+}
+
+.estado-parcial {
+  color: #1b83eb; /* azul */
+  font-weight: bold;
+  background: #1976d21f;
+}
+
+
+.estado-pagado {
+  color: #2e7d32; /* verde */
+  font-weight: bold;
+  background: #2e7d323a;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto; /* permite scroll horizontal en móviles */
+  margin-top: 16px;
+}
+
+table.mat-table {
+  width: 100%;
+  min-width: 600px; /* evita que se compriman demasiado las columnas */
+}
+
+.table-actions {
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.estado-pendiente {
+  color: orange;
+  font-weight: bold;
+}
+
+.estado-parcial {
+  color: #248588;
+  font-weight: bold;
+}
+
+.estado-pagado {
+  color: green;
+  font-weight: bold;
+}
+
+/* Ajustes en móviles */
+@media (max-width: 600px) {
+  .table-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  table.mat-table {
+    min-width: 0; /* permite que la tabla se adapte al contenedor y aparezca scroll si es necesario */
+  }
+
+  button.mat-raised-button {
+    width: 100%;
+  }
+}

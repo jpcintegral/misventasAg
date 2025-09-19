@@ -1,0 +1,36 @@
+.table-responsive {
+  width: 100%;
+  overflow-x: auto; /* scroll horizontal en pantallas pequeñas */
+  margin-top: 16px;
+}
+
+table.mat-table {
+  width: 100%;
+  min-width: 600px; /* evita que se compriman demasiado las columnas */
+}
+
+.table-actions {
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 600px) {
+  .table-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  table.mat-table {
+    min-width: 0; /* permite scroll si es necesario */
+  }
+
+  button.mat-raised-button {
+    width: 100%;
+  }
+
+  td.mat-cell, th.mat-header-cell {
+    font-size: 14px;
+  }
+}

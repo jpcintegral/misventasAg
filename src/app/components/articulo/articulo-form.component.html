@@ -1,0 +1,41 @@
+ <h3>{{ editingId ? 'Editar Artículo' : 'Nuevo Artículo' }}</h3>
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Marca</mat-label>
+        <input matInput formControlName="marca"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Precio Proveedor</mat-label>
+        <input matInput type="number" formControlName="precio_proveedor"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Precio Venta</mat-label>
+        <input matInput type="number" formControlName="precio_venta"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Mililitros</mat-label>
+        <input matInput type="number" formControlName="mililitros"/>
+      </mat-form-field>
+      <!-- Selección de proveedor -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Proveedor</mat-label>
+        <mat-select formControlName="proveedor" required>
+          <mat-option *ngFor="let p of proveedores" [value]="p.id">
+            {{ p.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+<!--
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Imagen URL</mat-label>
+        <input matInput formControlName="imagen"/>
+      </mat-form-field>-->
+
+      <div class="buttons">
+        <button mat-raised-button color="primary" type="submit">{{ editingId ? 'Actualizar' : 'Guardar' }}</button>
+        <button mat-stroked-button type="button" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>

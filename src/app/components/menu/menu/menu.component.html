@@ -1,0 +1,34 @@
+<mat-sidenav-container class="sidenav-container">
+  <!-- Menú lateral -->
+  <mat-sidenav
+    #sidenav
+    [mode]="isMobile ? 'over' : 'side'"
+    [(opened)]="sidenavOpened"
+  >
+    <mat-nav-list>
+      <a mat-list-item routerLink="/proveedores" (click)="isMobile ? toggleSidenav() : null">Proveedores</a>
+       <a mat-list-item routerLink="/vendedores" (click)="isMobile ? toggleSidenav() : null">Vendedores</a>
+      <a mat-list-item routerLink="/articulos" (click)="isMobile ? toggleSidenav() : null">Artículos</a>
+      <a mat-list-item routerLink="/compras" (click)="isMobile ? toggleSidenav() : null">Compras</a>
+      <a mat-list-item routerLink="/ventas" (click)="isMobile ? toggleSidenav() : null">Ventas</a>      
+      <a mat-list-item routerLink="/reportes" (click)="isMobile ? toggleSidenav() : null">Reportes</a>
+     
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Contenido principal -->
+  <mat-sidenav-content class="sidenav-content">
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="toggleSidenav()" *ngIf="isMobile">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Mi Sistema</span>
+      <span class="flex-1"></span>
+      <button mat-button (click)="logout()">Salir</button>
+    </mat-toolbar>
+
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
