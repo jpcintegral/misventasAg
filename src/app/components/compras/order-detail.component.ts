@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { maxPendienteValidator } from '../../validators/max-pendiente.validator';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -21,7 +22,7 @@ import autoTable from 'jspdf-autotable'
   styleUrl: './order-detail.component.css'
 })
 export class OrderDetailComponent implements OnInit {
-  private baseUrl = 'http://localhost:1337'; 
+  private baseUrl = `${environment.urlBackend}`;
   api = inject(ApiService);
   route = inject(ActivatedRoute);
   fb = inject(FormBuilder);

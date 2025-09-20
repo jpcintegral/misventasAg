@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { maxPendienteValidator } from '../../validators/max-pendiente.validator';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -22,7 +23,7 @@ import autoTable from 'jspdf-autotable'
   styleUrls: ['./sale-detail.component.css']
 })
 export class SaleDetailComponent implements OnInit {
-   private baseUrl = 'http://localhost:1337'; 
+    private baseUrl = `${environment.urlBackend}`;
   api = inject(ApiService);
   route = inject(ActivatedRoute);
   router = inject(Router);
