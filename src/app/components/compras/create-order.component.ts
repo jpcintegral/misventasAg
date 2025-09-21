@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../../services/api.service';
 import { Router, RouterModule } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-create-order',
@@ -30,6 +31,7 @@ export class CreateOrderComponent implements OnInit {
   api = inject(ApiService);
   snack = inject(MatSnackBar);
   router = inject(Router);
+    private baseUrl = `${environment.urlBackend}`;
 
   form = this.fb.group({
     proveedorId: [null, Validators.required],
@@ -71,7 +73,8 @@ export class CreateOrderComponent implements OnInit {
       this.articulos = res.data.map((a: any) => ({
         id: a.id,
         marca: a.marca,
-        precio_proveedor: a.precio_proveedor
+        precio_proveedor: a.precio_proveedor,
+        imagen : a.imagen
       }));
       // reset form array
       this.form.setControl('articulos', this.fb.array([]));
@@ -136,5 +139,22 @@ export class CreateOrderComponent implements OnInit {
   });
 }
 
+   getArticuloImageUrl(articulo: any): string {
+     console.log('articulo imagen', articulo);
+          if (!articulo?.imagen || articulo.imagen.length === 0) {
+            return 'assets/placeholder.png'; // Imagen por defecto si no hay
+          }
+
+          // Tomamos la primera imagen del array
+          const img = articulo.imagen[0];
+
+          // Si existe la versión small
+          if (img.formats?.small?.url) {
+            return this.baseUrl + img.formats.small.url;
+          }
+
+          // Si no existe small, usamos la imagen original
+          return this.baseUrl + img.url;
+        }
 
 }

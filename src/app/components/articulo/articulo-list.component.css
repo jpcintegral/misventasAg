@@ -1,6 +1,6 @@
 .table-responsive {
   width: 100%;
-  overflow-x: auto; /* scroll horizontal en pantallas pequeñas */
+  overflow-x: auto;
   margin-top: 16px;
 }
 
@@ -15,6 +15,21 @@ table.mat-table {
   justify-content: flex-start;
 }
 
+.marca-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.marca-img {
+  width: 60px;
+  margin: 10px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
 /* Ajustes para móviles */
 @media (max-width: 600px) {
   .table-actions {
@@ -23,7 +38,7 @@ table.mat-table {
   }
 
   table.mat-table {
-    min-width: 0; /* permite scroll si es necesario */
+    min-width: 0;
   }
 
   button.mat-raised-button {
@@ -34,8 +49,9 @@ table.mat-table {
     font-size: 14px;
   }
 
-  img {
-    width: 40px;
-    height: auto;
+  .marca-img {
+      margin: 5px;
+    width: 70px;
+    height: 70px;
   }
 }

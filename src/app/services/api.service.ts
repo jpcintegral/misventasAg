@@ -54,7 +54,8 @@ export class ApiService {
 
   // ================= ARTICULOS =================
   getArticulos(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/articulos?populate=proveedor&populate=seller_order_items.seller_order`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/articulos?populate=*`, { headers: this.headers });
+    //return this.http.get(`${this.baseUrl}/articulos?populate=proveedor&populate=seller_order_items.seller_order&&populate=*`, { headers: this.headers });
  
   }
   
@@ -153,7 +154,7 @@ export class ApiService {
   }
 
   getSellerOrder(documentId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/seller-orders/${documentId}?populate=items.articulo&populate=payments.evidencia`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/seller-orders/${documentId}?populate=items.articulo.imagen&populate=payments.evidencia`, { headers: this.headers });
   }
 
   createSellerOrder(data: any): Observable<any> {

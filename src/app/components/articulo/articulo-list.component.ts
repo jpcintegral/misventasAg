@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../../services/api.service';
 import { Articulo } from '../../models/articulo.model';
 import { RouterModule, Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-articulo-list',
@@ -18,9 +19,10 @@ export class ArticuloListComponent implements OnInit {
   api = inject(ApiService);
   snack = inject(MatSnackBar);
   router = inject(Router);
+   private baseUrl = `${environment.urlBackend}`;
 
   articulos: Articulo[] = [];
-  displayedColumns = ['proveedor','marca','precioProveedor','precioVenta','mililitros','imagen','actions'];
+  displayedColumns = ['proveedor','marca','precioProveedor','precioVenta','mililitros','actions'];
 
   ngOnInit() { this.load(); }
 
@@ -37,7 +39,7 @@ export class ArticuloListComponent implements OnInit {
     seller_order_items: r.seller_order_items,
     documentId: r.documentId,
     proveedor: r.proveedor.nombre,
-    imagen: r.imagen?.data?.attributes?.url || null // si tu content-type tiene media
+    imagen: r.imagen || null // si tu content-type tiene media
   })) || [];
 });
 
@@ -75,4 +77,22 @@ canDelete(articulo: any): boolean {
       this.load();
     });
   }
+        getArticuloImageUrl(articulo: any): string {
+          if (!articulo?.imagen || articulo.imagen.length === 0) {
+            return 'assets/placeholder.png'; // Imagen por defecto si no hay
+          }
+
+          // Tomamos la primera imagen del array
+          const img = articulo.imagen[0];
+
+          // Si existe la versión small
+          if (img.formats?.small?.url) {
+            return this.baseUrl + img.formats.small.url;
+          }
+
+          // Si no existe small, usamos la imagen original
+          return this.baseUrl + img.url;
+        }
+
+
 }

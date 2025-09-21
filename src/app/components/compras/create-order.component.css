@@ -1,4 +1,48 @@
-.full-width { width: 100%; margin-bottom: 12px; }
-    table { width: 100%; margin-top: 15px; margin-bottom: 10px; }
-    .total { margin-top: 10px; font-weight: bold; }
-    .buttons { display:flex; gap: 8px; margin-top: 10px; }
+.table-responsive {
+  width: 100%;
+  overflow-x: auto; /* scroll horizontal en móviles */
+  margin-top: 16px;
+}
+
+table.mat-table {
+  width: 100%;
+  min-width: 600px; /* evita que las columnas se compriman demasiado */
+}
+
+.marca-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.marca-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+/* Inputs en la tabla */
+td.mat-cell input[type="number"] {
+  width: 70px;
+  padding: 4px;
+  font-size: 14px;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 600px) {
+  table.mat-table {
+    min-width: 0; /* permite que el scroll haga el trabajo */
+    font-size: 13px;
+  }
+
+  .marca-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  td.mat-cell input[type="number"] {
+    width: 55px;
+  }
+}

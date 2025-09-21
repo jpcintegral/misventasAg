@@ -32,6 +32,7 @@ export class SaleDetailComponent implements OnInit {
   abonoForm!: FormGroup;
   evidenciaFile: File | null = null;
   vendedor : string = '';
+  
 
   venta: any = null;
   displayedColumns = ['articulo', 'cantidad', 'precio', 'subtotal'];
@@ -68,7 +69,7 @@ export class SaleDetailComponent implements OnInit {
             total: v.total,
             items: v.items.map((i: any) => ({
               id: i.id,
-              articulo: i.articulo.marca || 'N/A',
+              articulo: i.articulo || 'N/A',
               cantidad: i.cantidad,
               precio: i.articulo.precio_venta,
               subtotal: i.subtotal
@@ -189,7 +190,7 @@ generarRecibo(venta: any) {
     startY: 70,
     head: [['Artículo', 'Cantidad', 'Precio Unitario', 'Subtotal']],
     body: venta.items.map((i: any) => [
-      i.articulo,
+      i.articulo.marca,
       i.cantidad,
       `$${i.precio.toFixed(2)}`,
       `$${i.subtotal.toFixed(2)}`
@@ -239,5 +240,23 @@ generarRecibo(venta: any) {
   // Guardar PDF
   doc.save(`venta_${venta.codigo}.pdf`);
 }
+
+   getArticuloImageUrl(articulo: any): string {
+     console.log('articulo imagen', articulo);
+          if (!articulo?.imagen || articulo.imagen.length === 0) {
+            return 'assets/placeholder.png'; // Imagen por defecto si no hay
+          }
+
+          // Tomamos la primera imagen del array
+          const img = articulo.imagen[0];
+
+          // Si existe la versión small
+          if (img.formats?.small?.url) {
+            return this.baseUrl + img.formats.small.url;
+          }
+
+          // Si no existe small, usamos la imagen original
+          return this.baseUrl + img.url;
+        }
 
 }

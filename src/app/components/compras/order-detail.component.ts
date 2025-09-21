@@ -60,7 +60,7 @@ export class OrderDetailComponent implements OnInit {
           pagos: o.payments || [],
           payments: o.payments || [],
           items: o.items?.map((i:any) => ({
-            marca: i.articulo?.marca || 'Desconocido',
+            articulo: i.articulo || 'Desconocido',
             precio: i.precio,
             cantidad: i.cantidad || 0,
             total: i.subtotal || 0
@@ -202,5 +202,24 @@ getPaymentImageUrl(pago: any): string {
   // Guardar PDF
   doc.save(`compra_${compra.codigo}.pdf`);
 }
+
+ getArticuloImageUrl(articulo: any): string {
+   console.log('Artículo recibido para imagen:', articulo);
+          if (!articulo?.imagen || articulo.imagen.length === 0) {
+            return 'assets/placeholder.png'; // Imagen por defecto si no hay
+          }
+
+          // Tomamos la primera imagen del array
+          const img = articulo.imagen[0];
+
+          // Si existe la versión small
+          if (img.formats?.small?.url) {
+            return this.baseUrl + img.formats.small.url;
+          }
+
+          // Si no existe small, usamos la imagen original
+          return this.baseUrl + img.url;
+        }
+
 
 }

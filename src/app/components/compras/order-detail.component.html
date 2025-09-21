@@ -24,7 +24,12 @@
 
         <ng-container matColumnDef="marca">
           <th mat-header-cell *matHeaderCellDef>Marca</th>
-          <td mat-cell *matCellDef="let i">{{ i.marca }}</td>
+          <td mat-cell *matCellDef="let i">
+           <div class="marca-cell">
+          <!--<img [src]="getArticuloImageUrl(i.articulo)" alt="Imagen" class="marca-img"/>-->
+          <span>{{ i.articulo.marca}}</span>
+        </div>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="precio">

@@ -28,11 +28,11 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-<!--
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Imagen URL</mat-label>
-        <input matInput formControlName="imagen"/>
-      </mat-form-field>-->
+
+   <div class="file-input-container" >
+      <label for="img">Imagen del articulo (opcional)</label>
+      <input id="img" type="file" (change)="onFileSelected($event)">
+    </div>
 
       <div class="buttons">
         <button mat-raised-button color="primary" type="submit">{{ editingId ? 'Actualizar' : 'Guardar' }}</button>

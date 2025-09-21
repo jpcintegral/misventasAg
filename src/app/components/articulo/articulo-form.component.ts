@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../../services/api.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-articulo-form',
@@ -29,6 +30,8 @@ export class ArticuloFormComponent implements OnInit {
   snack = inject(MatSnackBar);
   route = inject(ActivatedRoute);
   router = inject(Router);
+  img: File | null = null;
+    private baseUrl = `${environment.urlBackend}`;
 
   proveedores: any[] = [];
 
@@ -70,24 +73,75 @@ export class ArticuloFormComponent implements OnInit {
     });
   }
 
-  save() {
-    if (this.form.invalid) return;
-    const payload = this.form.value ;
 
-    if (this.editingId) {
-      this.api.updateArticulo(this.editingId, payload).subscribe(() => {
+   onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if(file) this.img = file;
+  }
+
+
+    
+ save() {
+  if (this.form.invalid) return;
+  const payload = this.form.value;
+
+  if (this.editingId) {
+    // Actualización
+    this.api.updateArticulo(this.editingId, payload).subscribe({
+      next: (updatedArticulo: any) => {
         this.snack.open('Artículo actualizado', 'ok', { duration: 2000 });
+
+        // Subir imagen si hay
+        if (this.img) {
+           console.log("done img", this.img);
+          const uploadData = new FormData();
+          uploadData.append('files', this.img, this.img.name);
+          uploadData.append('ref', 'api::articulo.articulo'); // nombre del modelo
+          uploadData.append('refId', updatedArticulo.data.id.toString());
+          uploadData.append('field', 'imagen'); // nombre del campo en Strapi
+
+          this.api.uploadFile(uploadData).subscribe({
+            next: () => console.log('Imagen subida correctamente'),
+            error: err => console.error('Error al subir imagen', err)
+          });
+        }
+
         this.router.navigate(['/articulos']);
-      });
-    } else {
-      this.api.createArticulo(payload).subscribe(() => {
+      },
+      error: err => console.error(err)
+    });
+  } else {
+    // Creación
+    this.api.createArticulo(payload).subscribe({
+      next: (newArticulo: any) => {
+        // Subir imagen si hay
+        if (this.img) {
+          const uploadData = new FormData();
+          uploadData.append('files', this.img, this.img.name);
+          uploadData.append('ref', 'api::articulo.articulo'); // nombre del modelo
+          uploadData.append('refId', newArticulo.data.id.toString());
+          uploadData.append('field', 'imagen'); // nombre del campo en Strapi
+
+          this.api.uploadFile(uploadData).subscribe({
+            next: () => console.log('Imagen subida correctamente'),
+            error: err => console.error('Error al subir imagen', err)
+          });
+        }
+
         this.snack.open('Artículo creado', 'ok', { duration: 2000 });
         this.router.navigate(['/articulos']);
-      });
-    }
+      },
+      error: err => console.error(err)
+    });
   }
+}
 
   cancel() {
     this.router.navigate(['/articulos']);
   }
+  getPaymentImageUrl(articulo: any): string {
+  if (!articulo?.imagen) return '';
+  const imagen = articulo.imagen[0].url;
+  return this.baseUrl + imagen;
+}
 }

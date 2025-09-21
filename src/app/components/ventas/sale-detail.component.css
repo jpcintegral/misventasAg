@@ -36,3 +36,33 @@
     gap: 12px;
   }
 }
+
+/* Imagen dentro de las celdas */
+.marca-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.marca-img {
+  width: 60px;
+  height: 60px;
+  margin:5%;
+  object-fit: cover;       /* recorta y centra la imagen */
+  border-radius: 10px;      /* bordes redondeados */
+  border: 1px solid #ddd;  /* borde sutil */
+  flex-shrink: 0;          /* evita que se achique en pantallas pequeñas */
+}
+
+/* Ajustes responsivos para móviles */
+@media (max-width: 600px) {
+  .marca-img {
+    width: 70px;
+    height: 70px;
+   
+  }
+
+  .marca-cell span {
+    font-size: 14px;
+  }
+}
