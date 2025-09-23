@@ -52,20 +52,16 @@ export class ArticuloListComponent implements OnInit {
 canDelete(articulo: any): boolean {
    console.log('articulo para borrar', articulo);
   // Si no hay seller_order_items, se puede borrar
-  if (!articulo.seller_order_items?.length) return true;
+  if (articulo.seller_order_items?.length) return false;
+  if (articulo.purchase_items?.length) return false;
 
-  // Validamos que ninguno tenga un seller_order con status PENDIENTE
-  const tienePendientes = articulo.seller_order_items.some((item: any) => {
-    return item.seller_order?.status === 'PENDIENTE';
-  });
-  console.log('tienePendientes', tienePendientes);
-  return tienePendientes;
+  return true;
 }
 
   remove(a: Articulo) {
 
       if (!this.canDelete(a)) {
-      this.snack.open('No se puede eliminar: el artículo tiene ventas pendientes o parciales.', 'cerrar', {
+      this.snack.open('No se puede eliminar: el artículo tiene ventas o comporas asociadas.', 'cerrar', {
         duration: 3000
       });
       return;
