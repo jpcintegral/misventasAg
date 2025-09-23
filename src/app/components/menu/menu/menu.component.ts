@@ -38,7 +38,7 @@ export class MenuComponent {
   }
 
   logout() {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 

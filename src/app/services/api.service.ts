@@ -32,145 +32,145 @@ export class ApiService {
 
   // ================= PROVEEDORES =================
   getProveedores(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/proveedors?populate=*`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/proveedors?populate=*` );
   }
 
   getProveedor(documentId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/proveedors/${documentId}?populate=*`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/proveedors/${documentId}?populate=*` );
   }
 
   createProveedor(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/proveedors`, { data }, { headers: this.headers });
+    return this.http.post(`${this.baseUrl}/proveedors`, { data } );
   }
 
   updateProveedor(documentId: string, proveedor: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/proveedors/${documentId}`,
-       {data:proveedor} , { headers: this.headers });
+       {data:proveedor}  );
   }
 
   deleteProveedor(documentId: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/proveedors/${documentId}`, { headers: this.headers });
+    return this.http.delete(`${this.baseUrl}/proveedors/${documentId}` );
   }
 
   // ================= ARTICULOS =================
   getArticulos(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/articulos?populate=*`, { headers: this.headers });
-    //return this.http.get(`${this.baseUrl}/articulos?populate=proveedor&populate=seller_order_items.seller_order&&populate=*`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/articulos?populate=*`);
+    //return this.http.get(`${this.baseUrl}/articulos?populate=proveedor&populate=seller_order_items.seller_order` );
  
   }
   
    // Nueva función: obtiene todos los artículos con stock
   getArticulosConStock(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/articulos/findWithStock`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/articulos/findWithStock` );
   }
 
 
 
   getArticulo(documentId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/articulos/${documentId}?populate=*`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/articulos/${documentId}?populate=*` );
   }
 
   createArticulo(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/articulos`, { data }, { headers: this.headers });
+    return this.http.post(`${this.baseUrl}/articulos`, { data } );
   }
 
   updateArticulo(documentId: string, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/articulos/${documentId}`, { data }, { headers: this.headers });
+    return this.http.put(`${this.baseUrl}/articulos/${documentId}`, { data } );
   }
 
   deleteArticulo(documentId: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/articulos/${documentId}`, { headers: this.headers });
+    return this.http.delete(`${this.baseUrl}/articulos/${documentId}` );
   }
 
   // ================= VENDEDORES =================
   getVendedores(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/vendedors?populate=*`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/vendedors?populate=*` );
   }
 
   getVendedor(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/vendedors/${id}?populate=*`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/vendedors/${id}?populate=*` );
   }
 
   createVendedor(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/vendedors`, { data }, { headers: this.headers });
+    return this.http.post(`${this.baseUrl}/vendedors`, { data } );
   }
 
   updateVendedor(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/vendedors/${id}`, { data }, { headers: this.headers });
+    return this.http.put(`${this.baseUrl}/vendedors/${id}`, { data } );
   }
 
   deleteVendedor(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/vendedors/${id}`, { headers: this.headers });
+    return this.http.delete(`${this.baseUrl}/vendedors/${id}` );
   }
 
   // ================= COMPRAS / PEDIDOS =================
   getOrders(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/purchase-orders?populate=*`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/purchase-orders?populate=*` );
   }
 
   getOrder(documentId: string): Observable<any> {
   const url = `${this.baseUrl}/purchase-orders/${documentId}?populate=items.articulo&populate=proveedor&populate=payments.evidencia`;
 
-  return this.http.get(url, { headers: this.headers });
+  return this.http.get(url );
 }
 
 
   createOrder(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/purchase-orders`, data , { headers: this.headers });
+    return this.http.post(`${this.baseUrl}/purchase-orders`, data  );
   }
 
   updateOrder(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/purchase-orders/${id}`, { data }, { headers: this.headers });
+    return this.http.put(`${this.baseUrl}/purchase-orders/${id}`, { data } );
   }
 
   deleteOrder(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/purchase-orders/${id}`, { headers: this.headers });
+    return this.http.delete(`${this.baseUrl}/purchase-orders/${id}` );
   }
 
   // ================= VENTAS =================
   getSales(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/sales?populate=*`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/sales?populate=*` );
   }
 
   getSale(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/sales/${id}?populate=*`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/sales/${id}?populate=*` );
   }
 
   createSale(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/sales`, { data }, { headers: this.headers });
+    return this.http.post(`${this.baseUrl}/sales`, { data } );
   }
 
   updateSale(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/sales/${id}`, { data }, { headers: this.headers });
+    return this.http.put(`${this.baseUrl}/sales/${id}`, { data } );
   }
 
   deleteSale(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/sales/${id}`, { headers: this.headers });
+    return this.http.delete(`${this.baseUrl}/sales/${id}` );
   }
 
   // ================= SURTIDO VENDEDORES =================
   getSellerOrders(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/seller-orders?populate[vendedor]=true&populate[items][populate]=articulo`, { headers: this.headers }); 
+    return this.http.get(`${this.baseUrl}/seller-orders?populate[vendedor]=true&populate[items][populate]=articulo` ); 
   }
 
   getSellerOrder(documentId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/seller-orders/${documentId}?populate=items.articulo.imagen&populate=payments.evidencia`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/seller-orders/${documentId}?populate=items.articulo.imagen&populate=payments.evidencia` );
   }
 
   createSellerOrder(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/seller-orders`, { data }, { headers: this.headers });
+    return this.http.post(`${this.baseUrl}/seller-orders`, { data } );
   }
 
   updateSellerOrder(documentId: string, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/seller-orders/${documentId}`, { data }, { headers: this.headers });
+    return this.http.put(`${this.baseUrl}/seller-orders/${documentId}`, { data } );
   }
 
   deleteSellerOrder(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/seller-orders/${id}`, { headers: this.headers });
+    return this.http.delete(`${this.baseUrl}/seller-orders/${id}` );
   }
 
     deleteSellerOrderFull(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/seller-orders/${id}/deleteFull`, { headers: this.headers });
+    return this.http.delete(`${this.baseUrl}/seller-orders/${id}/deleteFull` );
   }
 
  updateSellerOrderStatus(documentId: string, status: string): Observable<any> {
@@ -195,17 +195,17 @@ export class ApiService {
   return this.http.post(`${this.baseUrl}/payments`, formData, { headers: headersPyment });
 }
   getPayments(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/payments?populate=*`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/payments?populate=*` );
   }
 
   // Deuda de un proveedor por tipo de botella
   getDeudaProveedor(proveedorId: string) {
-    return this.http.get(`${this.baseUrl}/deuda-proveedores/${proveedorId}`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/deuda-proveedores/${proveedorId}` );
   }
 
   // Deuda de un vendedor por tipo de botella
   getDeudaVendedor(vendedorId: number) {
-    return this.http.get(`${this.baseUrl}/deuda-vendedores/${vendedorId}`, { headers: this.headers });
+    return this.http.get(`${this.baseUrl}/deuda-vendedores/${vendedorId}` );
   }
   // ================= TOKEN =================
   setToken(token: string) {
@@ -219,10 +219,10 @@ export class ApiService {
   }
 
   createPurchaseItem(item: any) {
-  return this.http.post(`${this.baseUrl}/purchase-items`, item, { headers: this.headers });
+  return this.http.post(`${this.baseUrl}/purchase-items`, item );
 }
 getArticulosByProveedor(proveedorId: number) {
-   return this.http.get(`${this.baseUrl}/articulos?filters[proveedor][id][$eq]=${proveedorId}&populate=*`, { headers: this.headers });
+   return this.http.get(`${this.baseUrl}/articulos?filters[proveedor][id][$eq]=${proveedorId}&populate=*` );
 }
 
 // Actualizar estado del pedido
