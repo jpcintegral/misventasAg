@@ -7,6 +7,7 @@
 /.angular/
 .angular/
 
+
 # Node modules and dependency files
 /node_modules/
 /package-lock.json
@@ -14,6 +15,7 @@
 
 # Environment files
 /.env
+/src/environments
 
 # Angular CLI and build artefacts
 /.angular-cli.json
