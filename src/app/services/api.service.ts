@@ -173,6 +173,10 @@ export class ApiService {
     return this.http.delete(`${this.baseUrl}/seller-orders/${id}/deleteFull` );
   }
 
+    cancelSellerOrderFull(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/seller-orders/${id}/cancelOrder` );
+  }
+
  updateSellerOrderStatus(documentId: string, status: string): Observable<any> {
   return this.http.put(
     `${this.baseUrl}/seller-orders/${documentId}`,
@@ -267,4 +271,11 @@ updateOrderStatus(documentId: string, data: any) {
     return this.http.get(`${this.baseUrl}/reports/articulos-ventas-porcentaje`,{ headers: this.headers });
   }
 
+   getReporteVendedor(idVendedor : number ): Observable<any> {
+    return this.http.get(`${this.baseUrl}/vendedors/${idVendedor}/comprobante-general` );
+  }
+
+   getReporteProveddor(idProveedor : number ): Observable<any> {
+    return this.http.get(`${this.baseUrl}/proveedor/${idProveedor}/comprobante-general` );
+  }
 }

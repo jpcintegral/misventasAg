@@ -32,19 +32,29 @@
   </mat-tab>
 
   <!-- Pagos pendientes -->
-  <mat-tab label="Pagos Pendientes">
+  <mat-tab label="Pagos pendientes a proveedores">
     <div class="table-container" *ngIf="pagosPendientes.data.length >= 0; else loading">
       <table mat-table [dataSource]="pagosPendientes" class="mat-elevation-z8">
 
         <ng-container matColumnDef="proveedor">
           <th mat-header-cell *matHeaderCellDef>Proveedor</th>
-          <td mat-cell *matCellDef="let element">{{ element.proveedor }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
         </ng-container>
 
         <ng-container matColumnDef="totalPendiente">
           <th mat-header-cell *matHeaderCellDef>Total Pendiente</th>
           <td mat-cell *matCellDef="let element">{{ element.totalPendiente | currency }}</td>
         </ng-container>
+
+           <!-- Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" (click)="generarReporteVenderor(element.id,element.nombre)">
+            Generar Reporte
+          </button>
+        </td>
+      </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumnsPagosPendientes"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsPagosPendientes;"></tr>
@@ -53,32 +63,50 @@
   </mat-tab>
 
   <!-- Compras Pagas -->
-  <mat-tab label="Compras Pagas">
+  <mat-tab label="Compras Pagadas">
     <ng-container *ngIf="comprasPagas; else loading">
       <p>Total Pagado: {{ comprasPagas.totalPagado | currency }}</p>
     </ng-container>
   </mat-tab>
 
   <!-- Deuda Vendedores -->
-  <mat-tab label="Deuda Vendedores">
-    <div class="table-container" *ngIf="deudaVendedores.data.length >= 0; else loading">
-      <table mat-table [dataSource]="deudaVendedores" class="mat-elevation-z8">
+<mat-tab label="Deuda de Vendedores">
+  <div
+    class="table-container"
+    *ngIf="deudaVendedores.data.length >= 0; else loading"
+  >
+    <table mat-table [dataSource]="deudaVendedores" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="vendedor">
-          <th mat-header-cell *matHeaderCellDef>Vendedor</th>
-          <td mat-cell *matCellDef="let element">{{ element.vendedor }}</td>
-        </ng-container>
+      <!-- Nombre del vendedor -->
+      <ng-container matColumnDef="vendedor">
+        <th mat-header-cell *matHeaderCellDef>Vendedor</th>
+        <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+      </ng-container>
 
-        <ng-container matColumnDef="totalPendiente">
-          <th mat-header-cell *matHeaderCellDef>Deuda Pendiente</th>
-          <td mat-cell *matCellDef="let element">{{ element.deuda | currency }}</td>
-        </ng-container>
+      <!-- Deuda pendiente -->
+      <ng-container matColumnDef="totalPendiente">
+        <th mat-header-cell *matHeaderCellDef>Deuda Pendiente</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.deuda | currency }}
+        </td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumnsDeudaVendedores"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumnsDeudaVendedores;"></tr>
-      </table>
-    </div>
-  </mat-tab>
+      <!-- Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" (click)="generarReporte(element.id,element.nombre)">
+            Generar Reporte
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsDeudaVendedores"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsDeudaVendedores"></tr>
+    </table>
+  </div>
+</mat-tab>
+
 
   <!-- Ventas Pagas -->
   <mat-tab label="Ventas Pagas">

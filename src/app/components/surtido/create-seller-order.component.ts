@@ -44,6 +44,7 @@ export class CreateSellerOrderComponent implements OnInit {
 
     // Obtener artículos
     this.api.getArticulos().subscribe((res: any) => {
+      console.log("articulos",res);
       this.articulos = res.data.map((a: any) => ({
         id: a.id,
         marca: a.marca,

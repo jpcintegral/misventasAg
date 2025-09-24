@@ -47,8 +47,9 @@ montoControl = new FormControl(0, [Validators.required, Validators.min(0)]);
   displayedColumns = ['marca','precioVenta','stock','cantidad','total'];
 
  ngOnInit() {
-  this.api.getArticulosConStock().subscribe((res: any[]) => {
-    this.articulos = res.map((a: any) => ({ id: a.id, ...a }));
+  this.api.getArticulos().subscribe((res: any) => {
+     console.log("Articulos", res);
+    this.articulos = res.data.map((a: any) => ({ id: a.id, ...a }));
     this.articulos.forEach((a) =>
       this.articulosArray.push(
         new FormControl(0, {
@@ -61,6 +62,8 @@ montoControl = new FormControl(0, [Validators.required, Validators.min(0)]);
       )
     );
   });
+
+   
 
   this.form.controls['status'].valueChanges.subscribe(status => {
     if (status === 'PAGADO') {

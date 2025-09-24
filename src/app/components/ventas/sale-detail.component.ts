@@ -58,20 +58,22 @@ export class SaleDetailComponent implements OnInit {
       this.api.getSellerOrder(id).subscribe((res: any) => {
         if (res?.data) {
           const v = res.data;
+          console.log("detalle de venta",v);
           this.venta = {
             id: v.id,
             documentId: v.documentId,
             codigo: v.codigo,
             fecha: v.fecha,
             status: v.status,
-             pagos: v.payments || [],
-             payments: v.payments || [],
+            pagos: v.payments || [],
+            payments: v.payments || [],
             total: v.total,
             items: v.items.map((i: any) => ({
               id: i.id,
               articulo: i.articulo || 'N/A',
               cantidad: i.cantidad,
               precio: i.articulo.precio_venta,
+              precio_vendedor: i.precio_al_vendedor,
               subtotal: i.subtotal
             }))
           };
@@ -184,7 +186,7 @@ generarRecibo(venta: any) {
   doc.text(`Cliente: ${this.vendedor || 'venta'}`, 15, 40);
   doc.text(`Fecha: ${new Date(venta.fecha).toLocaleDateString()}`, 15, 50);
   doc.text(`Estado: ${venta.status}`, 15, 60);
-
+  console.log("comprovante",venta);
   // Tabla de artículos
   autoTable(doc, {
     startY: 70,
@@ -192,7 +194,7 @@ generarRecibo(venta: any) {
     body: venta.items.map((i: any) => [
       i.articulo.marca,
       i.cantidad,
-      `$${i.precio.toFixed(2)}`,
+      `$${i.precio_vendedor ? i.precio_vendedor.toFixed(2):i.precio.toFixed(2)}`,
       `$${i.subtotal.toFixed(2)}`
     ])
   });
@@ -242,7 +244,6 @@ generarRecibo(venta: any) {
 }
 
    getArticuloImageUrl(articulo: any): string {
-     console.log('articulo imagen', articulo);
           if (!articulo?.imagen || articulo.imagen.length === 0) {
             return 'assets/placeholder.png'; // Imagen por defecto si no hay
           }

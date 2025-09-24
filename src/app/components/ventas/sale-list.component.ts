@@ -89,7 +89,7 @@ export class SaleListComponent implements OnInit {
   cancelarVenta(venta: any) {
   if (!confirm(`¿Deseas cancelar la venta ${venta.codigo}?`)) return;
    venta.estado = 'CANCELADO';
-  this.api.updateSellerOrderStatus(venta.documentId,"CANCELADO").subscribe({
+  this.api.cancelSellerOrderFull(venta.id).subscribe({
     next: (res) => {
       // Actualizamos el estado en la UI
       venta.estado = 'CANCELADO';
