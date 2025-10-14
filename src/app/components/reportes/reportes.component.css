@@ -5,3 +5,49 @@
 table {
   width: 100%;
 }
+
+
+::ng-deep .mat-expansion-panel.mat-expanded {
+  background-color: #e8eef5 !important; 
+  border-left: 4px solid #245388; 
+  transition: background-color 0.3s ease;
+}
+
+::ng-deep .mat-expansion-panel-header.mat-expanded {
+  color: #243b88 !important;
+  font-weight: bold;
+}
+
+
+::ng-deep .mat-mdc-table thead tr {
+  background-color: #3f51b5 !important;
+}
+
+::ng-deep .mat-mdc-header-cell {
+  color: white !important;
+  font-weight: 600;
+}
+
+::ng-deep .mat-mdc-row:hover {
+  background-color: #eaeaea !important;
+  cursor: pointer;
+}
+
+::ng-deep .mat-mdc-cell {
+  color: #6b6b6b !important;
+  border-bottom: 1px solid #ddd !important;
+}
+
+
+.info-box {
+  background-color: rgba(68, 68, 68, 0.1); /* verde aqua muy claro */
+  color: #0f0f0f;
+  border-left: 4px solid #363636;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+
+

@@ -278,4 +278,25 @@ updateOrderStatus(documentId: string, data: any) {
    getReporteProveddor(idProveedor : number ): Observable<any> {
     return this.http.get(`${this.baseUrl}/proveedor/${idProveedor}/comprobante-general` );
   }
+
+  
+getGananciaTotal(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/reports/ganancia-total`, { headers: this.headers });
+}
+
+getGananciaMensual(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/reports/ganancia-mensual`, { headers: this.headers });
+}
+
+getPagosAProveedores(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/reports/pagos-proveedores`, { headers: this.headers });
+}
+
+getVentasPorVendedor(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/reports/ventas-vendedor`, { headers: this.headers });
+}
+
+getResumenGeneral(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/reports/resumen-general`, { headers: this.headers });
+}
 }
