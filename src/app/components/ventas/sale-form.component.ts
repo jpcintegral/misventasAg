@@ -14,7 +14,7 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-sale-form',
   standalone: true,
-  imports: [ 
+  imports: [
     CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -37,11 +37,12 @@ export class SaleFormComponent implements OnInit {
   form = this.fb.group({
     articulos: this.fb.array<FormControl<number>>([]),
      status: this.fb.control('PENDIENTE', { nonNullable: true }),
-     
+      comentario: [''],
+
   });
 montoControl = new FormControl(0, [Validators.required, Validators.min(0)]);
 
-  
+
 
   articulos: any[] = [];
   displayedColumns = ['marca','precioVenta','stock','cantidad','total'];
@@ -63,7 +64,7 @@ montoControl = new FormControl(0, [Validators.required, Validators.min(0)]);
     );
   });
 
-   
+
 
   this.form.controls['status'].valueChanges.subscribe(status => {
     if (status === 'PAGADO') {
@@ -132,7 +133,8 @@ onFileSelected(event: any) {
     fecha: new Date(),
     status: this.form.controls['status'].value,
     total: this.calculateGrandTotal(),
-    vendedor: null
+    vendedor: null,
+    comentario: this.form.controls['comentario'].value || ''
   };
 
   this.api.createSellerOrder(venta).subscribe({
@@ -155,12 +157,12 @@ onFileSelected(event: any) {
         next: () => {
           // 👇 Si la venta es PAGADA, registramos el pago directo
           if (venta.status === 'PAGADO' || venta.status === 'PARCIAL') {
-            
+
          const pago = new FormData();
             pago.append('data[monto]', (venta.status === 'PARCIAL' ? this.montoControl.value! : venta.total).toString());
             pago.append('data[seller_order]', orderId.toString());
-       
-        
+
+
             this.api.createPayment(pago).subscribe({
               next: (payment: any) => {
               if (this.evidenciaFile) {
@@ -175,7 +177,7 @@ onFileSelected(event: any) {
                   error: err => console.error('Error al subir evidencia', err)
                 });
               }
-              
+
 
                 this.snack.open('Venta y pago registrados correctamente', 'ok', { duration: 2500 });
                 this.router.navigate(['/ventas']);

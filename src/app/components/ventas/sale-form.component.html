@@ -3,7 +3,7 @@
 
   <div class="form-container">
 
-   
+
     <!-- Contenedor de la tabla -->
     <div class="table-responsive">
       <table mat-table [dataSource]="articulos" class="mat-elevation-z8">
@@ -47,14 +47,14 @@
       </table>
     </div>
 
-     <!-- Contenedor de campos (estatus, monto, evidencia) -->
+     <!-- Contenedor de campos (estatus, monto, evidencia, comentario) -->
     <div class="form-fields">
       <div class="status-select" *ngIf="calculateGrandTotal() > 0">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Estatus de la Venta</mat-label>
           <mat-select [formControl]="form.controls['status']">
             <mat-option value="PENDIENTE">Pendiente</mat-option>
-            <mat-option value="CANCELADO">Cancelado</mat-option>"
+            <mat-option value="CANCELADO">Cancelado</mat-option>
             <mat-option value="PARCIAL">Parcial</mat-option>
             <mat-option value="PAGADO">Pagado</mat-option>
           </mat-select>
@@ -63,9 +63,9 @@
         <!-- Monto a pagar dinámico según estatus -->
         <mat-form-field appearance="outline" class="full-width" *ngIf="form.controls['status'].value === 'PAGADO' || form.controls['status'].value === 'PARCIAL'">
           <mat-label>Monto a pagar</mat-label>
-          <input 
-            matInput 
-            type="number" 
+          <input
+            matInput
+            type="number"
             [formControl]="montoControl"
             [readonly]="form.controls['status'].value === 'PAGADO'"
             [value]="form.controls['status'].value === 'PAGADO' ? calculateGrandTotal() : null"
@@ -75,10 +75,20 @@
         <label for="evidencia">Comprobante de Pago (opcional)</label>
         <input id="evidencia" type="file" (change)="onFileSelected($event)">
       </div>
-    </div>
-      </div>
 
-      
+        <br>
+        <!-- NUEVO CAMPO: Comentario -->
+        <mat-form-field appearance="outline" class="full-width mt-3">
+          <mat-label>Comentario</mat-label>
+          <textarea
+            matInput
+            formControlName="comentario"
+            rows="2"
+            placeholder="Agrega un comentario sobre la venta (opcional)">
+          </textarea>
+        </mat-form-field>
+       </div>
+    </div>
 
   </div>
 

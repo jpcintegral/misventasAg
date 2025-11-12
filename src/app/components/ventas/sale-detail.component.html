@@ -4,6 +4,9 @@
 
   <!-- Información de la venta -->
   <div class="venta-info">
+     <br>
+      <p><strong>Comentario: </strong>{{venta.comentario}}</p>
+
     <p  *ngIf="vendedor"><strong>Vendedor:</strong> {{ vendedor }}</p>
     <p ><strong>Fecha:</strong> {{ venta.fecha | date:'short' }}</p>
     <p><strong>Status:</strong> {{ venta.status }}</p>
@@ -20,7 +23,7 @@
 
       <ng-container matColumnDef="articulo">
         <th mat-header-cell *matHeaderCellDef>Artículo</th>
-      
+
          <td mat-cell *matCellDef="let item">
         <div class="marca-cell">
           <img [src]="getArticuloImageUrl(item.articulo)" alt="Imagen" class="marca-img"/>
@@ -87,7 +90,7 @@
   <hr style="border: 1px solid #878787; margin: 16px 0;">
 
   <!-- Historial de pagos / abonos -->
-  <h4>Historial de Pagos / Abonos</h4>  
+  <h4>Historial de Pagos / Abonos</h4>
   <div class="table-responsive" *ngIf="venta?.payments?.length">
     <table mat-table [dataSource]="venta?.payments" class="mat-elevation-z8">
 
@@ -108,10 +111,10 @@
       <!-- Evidencia -->
       <ng-container matColumnDef="evidencia">
         <th mat-header-cell *matHeaderCellDef> Evidencia </th>
-        <td mat-cell *matCellDef="let pago"> 
+        <td mat-cell *matCellDef="let pago">
           <ng-container *ngIf="pago?.evidencia">
             <img [src]="getPaymentImageUrl(pago)" alt="Evidencia" width="50" height="50"/>
-          </ng-container>  
+          </ng-container>
         </td>
       </ng-container>
 

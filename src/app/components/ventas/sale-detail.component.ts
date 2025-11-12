@@ -32,12 +32,12 @@ export class SaleDetailComponent implements OnInit {
   abonoForm!: FormGroup;
   evidenciaFile: File | null = null;
   vendedor : string = '';
-  
+
 
   venta: any = null;
   displayedColumns = ['articulo', 'cantidad', 'precio', 'subtotal'];
   constructor() {
-    
+
   }
 
 
@@ -47,8 +47,8 @@ export class SaleDetailComponent implements OnInit {
      console.log('ID de la venta:', id);
     if (id) {
      this.loadOrder(id);
-   
-    
+
+
     }
   }
 
@@ -68,6 +68,7 @@ export class SaleDetailComponent implements OnInit {
             pagos: v.payments || [],
             payments: v.payments || [],
             total: v.total,
+            comentario: v.comentario || '',
             items: v.items.map((i: any) => ({
               id: i.id,
               articulo: i.articulo || 'N/A',
@@ -79,7 +80,7 @@ export class SaleDetailComponent implements OnInit {
           };
         }
           this.abonoForm = this.fb.group({
-      monto: [0, [Validators.required, 
+      monto: [0, [Validators.required,
         Validators.min(0),maxPendienteValidator(this.venta)]]
     });
       });
@@ -99,7 +100,7 @@ export class SaleDetailComponent implements OnInit {
   }
 
 
-    
+
 submitPayment() {
   if(this.abonoForm.invalid || !this.venta) return;
 
@@ -121,8 +122,8 @@ submitPayment() {
 
   // Crear payment
   this.api.createPayment(formData).subscribe({
-    next: (payment: any) => { 
-        
+    next: (payment: any) => {
+
        if (this.evidenciaFile) {
                 const uploadData = new FormData();
                 uploadData.append('files', this.evidenciaFile, this.evidenciaFile.name);
@@ -135,11 +136,11 @@ submitPayment() {
                   error: err => console.error('Error al subir evidencia', err)
                 });
               }
-        
+
       // Actualizar estado del pedido
       this.api.updateSellerOrder(this.venta.documentId, { status: nuevoEstado }).subscribe(() => {
         this.snack.open('Pago registrado correctamente', 'ok', { duration: 2000 });
-        this.loadOrder(this.venta.documentId); 
+        this.loadOrder(this.venta.documentId);
         this.abonoForm.reset();
         this.evidenciaFile = null;
       });

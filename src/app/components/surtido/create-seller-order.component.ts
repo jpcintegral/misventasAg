@@ -29,7 +29,8 @@ export class CreateSellerOrderComponent implements OnInit {
 
   form = this.fb.group({
     vendedorId: [null, Validators.required],
-    articulos: this.fb.array([]) // FormArray dinámico
+    articulos: this.fb.array([]), // FormArray dinámico
+    comentario : ['']
   });
 
   vendedores: any[] = [];
@@ -121,7 +122,8 @@ export class CreateSellerOrderComponent implements OnInit {
       vendedor: this.form.value.vendedorId,
       fecha: new Date(),
       status: 'PENDIENTE',
-      total: this.calculateGrandTotal()
+      total: this.calculateGrandTotal(),
+      comentario: this.form.controls['comentario'].value || ''
     };
 
     this.api.createSellerOrder(pedido).subscribe({

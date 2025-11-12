@@ -54,6 +54,18 @@
   <div class="total">
     Total Pedido: {{ calculateGrandTotal() | currency }}
   </div>
+   <br>
+        <!-- NUEVO CAMPO: Comentario -->
+        <mat-form-field appearance="outline" class="full-width mt-6">
+          <mat-label>Comentario</mat-label>
+          <textarea
+            matInput
+            formControlName="comentario"
+            rows="2"
+            placeholder="Agrega un comentario sobre la venta (opcional)">
+          </textarea>
+        </mat-form-field>
+        <br>
 
   <div class="buttons">
     <button mat-raised-button color="primary" type="submit">Guardar Pedido</button>
